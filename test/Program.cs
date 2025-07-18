@@ -21,4 +21,10 @@ app.MapPost("/send", async (string botName, string message, MessageSenderService
     return Results.Ok("Message sent (or attempted).");
 });
 
-app.Run();
+//app.Run();
+using (var scope = app.Services.CreateScope())
+{
+    var interactiveService = scope.ServiceProvider.GetRequiredService<MessageSenderService>();
+    await interactiveService.RunInteractiveAsync();
+}
+
